@@ -54,3 +54,11 @@ Admin panelga kiring: `/admin/products`.
 5. Bir modelda bir nechta xotira/rang bo‘lsa, mijoz mahsulot sahifasida tanlay oladi.
 
 Tayyor format: `JSON_IMPORT_EXAMPLE.json`.
+
+## v4 — QR mobile product flow
+Mahsulot QR orqali ochilganda 3 bosqichli mobil xarid oqimi ishlaydi:
+1. Mahsulot + narx + aloo afzalliklari.
+2. Rang + xotira + to‘liq/12/24 oy to‘lov tanlovi.
+3. Kontakt + filial + buyurtmani yuborish.
+
+Dizayn aloo oq/qora/#1690F5 tizimida va mobil ekran uchun optimallashtirilgan.
