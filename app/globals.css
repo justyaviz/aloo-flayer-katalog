@@ -121,7 +121,12 @@ th { color:#697381; font-size:11px; text-transform:uppercase; letter-spacing:.06
 .admin-form .wide { grid-column:1/-1; }
 .inline { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 .toggle { display:flex; gap:8px; align-items:center; font-weight:700; }
-.qr-preview { background:#fff; border:1px solid var(--line); border-radius:16px; padding:10px; width:150px; }
+.qr-admin-cell { display:flex; gap:12px; align-items:center; min-width:290px; }
+.qr-frame { width:132px; height:132px; display:grid; place-items:center; background:linear-gradient(145deg,#f7fbff,#edf7ff); border:1px solid #d9edff; border-radius:22px; box-shadow:0 8px 24px rgba(22,144,245,.08); }
+.qr-preview { display:block; width:116px; height:116px; background:#fff; border-radius:14px; }
+.qr-meta { display:flex; flex-direction:column; align-items:flex-start; gap:8px; min-width:0; }
+.qr-badge { display:inline-flex; align-items:center; border-radius:999px; padding:5px 9px; background:#eaf5ff; color:#0878da; font-size:10px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; }
+.qr-link { font-size:10px; line-height:1.35; color:#77808c; max-width:150px; overflow-wrap:anywhere; }
 .login-page { min-height:100vh; display:grid; place-items:center; background:radial-gradient(circle at 20% 15%,#dff2ff,#f8fbfe 45%,#fff); padding:24px; }
 .login-card { width:min(420px,100%); background:#fff; border:1px solid var(--line); border-radius:28px; padding:28px; box-shadow:var(--shadow); }
 .login-card img { width:128px; }

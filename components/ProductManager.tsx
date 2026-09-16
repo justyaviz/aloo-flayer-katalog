@@ -126,7 +126,7 @@ export default function ProductManager({ products, siteUrl }: { products: Produc
           <td><b>{p.name}</b><div style={{color:"#7a8390",fontSize:11}}>{p.slug}</div></td>
           <td><b>{formatMoney(p.new_price)}</b><div className="old-price">{p.old_price ? formatMoney(p.old_price) : ""}</div></td>
           <td>{formatMoney(p.installment_12)}<br/><span style={{color:"#7a8390"}}>{formatMoney(p.installment_24)}</span></td>
-          <td><div className="inline"><img className="qr-preview" src={`/api/qr/${p.slug}`} alt={`${p.name} QR`} width={110} height={110}/><div><a className="btn btn-secondary" href={`/api/qr/${p.slug}`} download={`${p.slug}-qr.svg`}>QR SVG</a><div style={{fontSize:10,color:"#77808c",marginTop:6,maxWidth:170,wordBreak:"break-all"}}>{siteUrl}/p/{p.slug}</div></div></div></td>
+          <td><div className="qr-admin-cell"><div className="qr-frame"><img className="qr-preview" src={`/api/qr/${p.slug}`} alt={`${p.name} QR`} width={116} height={116}/></div><div className="qr-meta"><span className="qr-badge">aloo QR</span><a className="btn btn-secondary" href={`/api/qr/${p.slug}`} download={`${p.slug}-qr.svg`}>SVG yuklash</a><div className="qr-link">{siteUrl}/p/{p.slug}</div></div></div></td>
           <td><span className={`status ${p.active ? "status-completed" : "status-cancelled"}`}>{p.active ? "Faol" : "O‘chiq"}</span></td>
           <td><div className="inline"><button className="btn btn-secondary" onClick={()=>edit(p)}>Tahrirlash</button><a className="btn btn-secondary" href={`/p/${p.slug}`} target="_blank">Ko‘rish</a><button className="btn btn-danger" onClick={()=>remove(p.id,p.name)}>O‘chirish</button></div></td>
         </tr>)}
