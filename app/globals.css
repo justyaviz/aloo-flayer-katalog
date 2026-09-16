@@ -165,3 +165,119 @@ th { color:#697381; font-size:11px; text-transform:uppercase; letter-spacing:.06
   .admin-form .wide { grid-column:auto; }
   .admin-tabs { display:none; }
 }
+
+/* ===== QR scan product experience v2 ===== */
+.product-topbar { position:sticky; top:0; z-index:60; background:rgba(255,255,255,.86); backdrop-filter:blur(20px); border-bottom:1px solid rgba(220,232,242,.8); }
+.product-topbar-inner { height:70px; display:flex; align-items:center; justify-content:space-between; }
+.product-topbar-logo img { display:block; width:118px; height:auto; }
+.official-pill { display:inline-flex; align-items:center; gap:7px; padding:9px 12px; border-radius:999px; color:#0f74c9; background:#edf7ff; border:1px solid #d4ebff; font-size:12px; font-weight:800; }
+.scan-product-page { min-height:100vh; background:linear-gradient(180deg,#f8fcff 0%,#fff 38%,#f7fbff 100%); padding:22px 0 72px; }
+.scan-shell { position:relative; }
+.back-link { display:inline-flex; align-items:center; gap:4px; color:#66707d; font-size:13px; font-weight:700; margin-bottom:16px; }
+.scan-hero { display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); gap:34px; align-items:start; }
+.scan-media-card { position:sticky; top:92px; min-height:610px; overflow:hidden; display:flex; align-items:center; justify-content:center; border:1px solid #dcecf8; border-radius:34px; background:linear-gradient(145deg,#ffffff 0%,#f1f9ff 52%,#dff2ff 100%); box-shadow:0 24px 65px rgba(18,78,122,.11); }
+.scan-media-card:before { content:""; position:absolute; width:430px; height:430px; right:-170px; bottom:-170px; border-radius:50%; background:#1690F5; opacity:.11; }
+.scan-media-card:after { content:""; position:absolute; width:280px; height:280px; left:-120px; top:-110px; border-radius:50%; border:42px solid rgba(22,144,245,.08); }
+.scan-media-glow { position:absolute; width:54%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,rgba(22,144,245,.18),rgba(22,144,245,0) 68%); filter:blur(2px); }
+.scan-product-image { position:relative; z-index:2; width:86%; height:470px; object-fit:contain; filter:drop-shadow(0 28px 30px rgba(19,52,78,.18)); }
+.floating-discount { position:absolute; z-index:5; top:22px; left:22px; padding:9px 12px; border-radius:999px; background:#0b0b0d; color:#fff; font-size:13px; font-weight:900; }
+.care-ribbon { position:absolute; z-index:5; left:20px; right:20px; bottom:20px; display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:20px; background:rgba(22,144,245,.94); color:#fff; box-shadow:0 14px 35px rgba(22,144,245,.28); backdrop-filter:blur(14px); }
+.care-ribbon-icon { width:42px; height:42px; display:grid; place-items:center; border-radius:13px; background:rgba(255,255,255,.17); flex:0 0 auto; }
+.care-ribbon small,.care-ribbon strong { display:block; }
+.care-ribbon small { opacity:.82; font-size:11px; }
+.care-ribbon strong { margin-top:2px; font-size:14px; }
+.scan-info { padding:14px 6px 0; }
+.scan-eyebrow { display:inline-flex; align-items:center; gap:7px; color:#0878da; background:#edf7ff; border:1px solid #d7edff; border-radius:999px; padding:8px 11px; font-size:12px; font-weight:800; }
+.scan-info h1 { margin:15px 0 10px; font-size:clamp(38px,5vw,58px); line-height:1; letter-spacing:-.05em; }
+.scan-description { max-width:630px; margin:0 0 20px; color:#66707c; line-height:1.65; font-size:15px; }
+.scan-price-card { margin-top:20px; border:1px solid #d9e8f4; border-radius:24px; padding:19px 20px; background:#fff; box-shadow:0 10px 30px rgba(18,66,102,.06); }
+.price-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#75808d; font-size:12px; font-weight:700; }
+.price-topline b { color:#d53830; background:#fff0ef; padding:6px 9px; border-radius:999px; font-size:11px; }
+.scan-price { margin-top:8px; font-size:clamp(30px,4vw,42px); font-weight:900; letter-spacing:-.04em; }
+.scan-old-price { display:inline-block; margin-top:3px; color:#a0a7b1; text-decoration:line-through; font-size:14px; }
+.scan-installments { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+.scan-installment-card { border:1px solid #dce8f2; border-radius:20px; padding:16px 17px; background:#fff; }
+.scan-installment-card span,.scan-installment-card small,.scan-installment-card strong { display:block; }
+.scan-installment-card span { color:#66717d; font-size:12px; font-weight:700; }
+.scan-installment-card strong { margin-top:5px; font-size:18px; }
+.scan-installment-card small { margin-top:2px; color:#929aa4; font-size:11px; }
+.featured-installment { border-color:#a8d8ff; background:linear-gradient(145deg,#f2f9ff,#e8f5ff); }
+.scan-primary-cta { margin-top:14px; min-height:58px; display:flex; align-items:center; justify-content:center; gap:10px; border-radius:18px; background:linear-gradient(135deg,#1690F5,#0276db); color:#fff; font-weight:900; box-shadow:0 16px 34px rgba(22,144,245,.24); transition:.18s ease; }
+.scan-primary-cta:hover { transform:translateY(-1px); box-shadow:0 20px 42px rgba(22,144,245,.30); }
+.scan-primary-cta span { font-size:22px; line-height:1; }
+.fit-card { display:flex; align-items:flex-start; gap:12px; margin-top:14px; padding:16px; border-radius:20px; background:#f7fafc; border:1px solid #e3e9ef; }
+.fit-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:12px; background:#eaf5ff; color:#1185e6; flex:0 0 auto; }
+.fit-card span { color:#3f4b57; font-size:12px; font-weight:900; }
+.fit-card p { margin:5px 0 0; color:#6d7782; line-height:1.55; font-size:13px; }
+.benefit-section { padding:54px 0 24px; }
+.benefit-head span,.order-kicker { color:#1185e6; font-size:12px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+.benefit-head h2 { margin:6px 0 18px; font-size:30px; letter-spacing:-.035em; }
+.benefit-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.benefit-card { min-height:150px; padding:17px; border-radius:22px; border:1px solid #e1e8ef; background:#fff; }
+.benefit-card > svg { width:27px; height:27px; color:#1690F5; }
+.benefit-card strong { display:block; margin-top:15px; font-size:14px; }
+.benefit-card p { margin:5px 0 0; color:#77818c; font-size:12px; line-height:1.5; }
+.benefit-care { background:linear-gradient(150deg,#1690F5,#087bdc); border-color:transparent; color:#fff; }
+.benefit-care > svg,.benefit-care p { color:#fff; }
+.benefit-care p { opacity:.82; }
+.premium-order-section { margin-top:30px; display:grid; grid-template-columns:.9fr 1.1fr; gap:24px; padding:30px; border:1px solid #dbe9f4; border-radius:32px; background:linear-gradient(135deg,#f0f8ff,#fff 65%); box-shadow:0 18px 55px rgba(20,71,108,.07); }
+.order-copy { padding:10px 8px; }
+.order-copy h2 { margin:7px 0 12px; font-size:33px; line-height:1.08; letter-spacing:-.04em; }
+.order-copy > p { color:#6d7782; line-height:1.65; }
+.order-trust { margin-top:18px; display:flex; align-items:flex-start; gap:7px; color:#63707d; font-size:12px; line-height:1.5; }
+.order-trust svg { color:#1690F5; flex:0 0 auto; margin-top:1px; }
+.order-form-surface { background:#fff; border:1px solid #e0e8ef; border-radius:24px; padding:20px; box-shadow:0 12px 34px rgba(18,66,102,.06); }
+.order-form-surface .form-grid { gap:10px; }
+.order-form-surface .field input,.order-form-surface .field textarea { background:#f9fbfd; border-radius:13px; }
+.order-form-surface .btn-primary { min-height:52px; width:100%; border-radius:15px; }
+.mobile-buybar { display:none; }
+
+@media (max-width: 900px) {
+  .scan-hero { grid-template-columns:1fr; gap:20px; }
+  .scan-media-card { position:relative; top:auto; min-height:500px; }
+  .scan-product-image { height:390px; }
+  .benefit-grid { grid-template-columns:1fr 1fr; }
+  .premium-order-section { grid-template-columns:1fr; }
+}
+
+@media (max-width: 640px) {
+  .product-topbar-inner { height:62px; }
+  .product-topbar-logo img { width:105px; }
+  .official-pill { padding:7px 9px; font-size:10px; }
+  .scan-product-page { padding:12px 0 96px; }
+  .back-link { margin-bottom:10px; font-size:12px; }
+  .scan-media-card { min-height:385px; border-radius:25px; }
+  .scan-product-image { width:90%; height:292px; }
+  .floating-discount { top:14px; left:14px; font-size:11px; padding:7px 9px; }
+  .care-ribbon { left:12px; right:12px; bottom:12px; border-radius:16px; padding:10px 12px; }
+  .care-ribbon-icon { width:35px; height:35px; border-radius:10px; }
+  .care-ribbon strong { font-size:12px; }
+  .care-ribbon small { font-size:9px; }
+  .scan-info { padding:3px 1px 0; }
+  .scan-eyebrow { font-size:10px; padding:7px 9px; }
+  .scan-info h1 { font-size:35px; margin-top:12px; }
+  .scan-description { font-size:13px; margin-bottom:14px; }
+  .scan-price-card { border-radius:19px; padding:15px 16px; margin-top:14px; }
+  .scan-price { font-size:31px; }
+  .scan-installment-card { border-radius:17px; padding:13px 14px; }
+  .scan-installment-card strong { font-size:15px; }
+  .scan-primary-cta { min-height:54px; border-radius:16px; }
+  .fit-card { border-radius:17px; padding:13px; }
+  .benefit-section { padding:36px 0 12px; }
+  .benefit-head h2 { font-size:25px; }
+  .benefit-grid { grid-template-columns:1fr 1fr; gap:9px; }
+  .benefit-card { min-height:142px; padding:14px; border-radius:18px; }
+  .premium-order-section { margin-top:22px; padding:17px; border-radius:24px; gap:13px; }
+  .order-copy { padding:3px 1px; }
+  .order-copy h2 { font-size:27px; }
+  .order-form-surface { border-radius:19px; padding:14px; }
+  .footer { padding-bottom:95px; }
+  .mobile-buybar { position:fixed; z-index:80; left:10px; right:10px; bottom:10px; display:flex; align-items:center; gap:8px; padding:9px; border-radius:20px; background:rgba(255,255,255,.94); border:1px solid #dce8f2; box-shadow:0 18px 45px rgba(8,48,78,.20); backdrop-filter:blur(20px); }
+  .mobile-buybar-price { min-width:0; flex:1; padding-left:4px; }
+  .mobile-buybar-price small,.mobile-buybar-price strong { display:block; }
+  .mobile-buybar-price small { color:#8a929c; font-size:9px; }
+  .mobile-buybar-price strong { margin-top:1px; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mobile-call,.mobile-order { min-height:43px; display:flex; align-items:center; justify-content:center; border-radius:13px; padding:0 12px; font-size:11px; font-weight:900; }
+  .mobile-call { background:#eef6fc; color:#0878da; }
+  .mobile-order { background:#1690F5; color:#fff; padding:0 17px; }
+}
