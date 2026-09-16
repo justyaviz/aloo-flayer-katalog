@@ -127,7 +127,7 @@ export default function ProductManager({ products, siteUrl }: { products: Produc
           <td><b>{formatMoney(p.new_price)}</b><div className="old-price">{p.old_price ? formatMoney(p.old_price) : ""}</div></td>
           <td>{formatMoney(p.installment_12)}<br/><span style={{color:"#7a8390"}}>{formatMoney(p.installment_24)}</span></td>
           <td><div className="qr-admin-cell"><div className="qr-frame"><img className="qr-preview" src={`/api/qr/${p.slug}`} alt={`${p.name} QR`} width={116} height={116}/></div><div className="qr-meta"><span className="qr-badge">aloo QR</span><a className="btn btn-secondary" href={`/api/qr/${p.slug}`} download={`${p.slug}-qr.svg`}>SVG yuklash</a><div className="qr-link">{siteUrl}/p/{p.slug}</div></div></div></td>
-          <td><span className={`status ${p.active ? "status-completed" : "status-cancelled"}`}>{p.active ? "Faol" : "O‘chiq"}</span></td>
+          <td><div style={{display:"grid",gap:5}}><span className={`status ${p.active ? "status-completed" : "status-cancelled"}`}>{p.active ? "Faol" : "O‘chiq"}</span><span className={`status ${p.in_stock ? "status-completed" : "status-cancelled"}`}>{p.in_stock ? "Sotuvda" : "Tugagan"}</span>{p.json_managed ? <small style={{color:"#0878da",fontWeight:800}}>JSON</small> : null}</div></td>
           <td><div className="inline"><button className="btn btn-secondary" onClick={()=>edit(p)}>Tahrirlash</button><a className="btn btn-secondary" href={`/p/${p.slug}`} target="_blank">Ko‘rish</a><button className="btn btn-danger" onClick={()=>remove(p.id,p.name)}>O‘chirish</button></div></td>
         </tr>)}
       </tbody></table></div>

@@ -6,8 +6,11 @@ import ProductTopbar from "@/components/ProductTopbar";
 import SiteFooter from "@/components/SiteFooter";
 import OrderForm from "@/components/OrderForm";
 import ViewTracker from "@/components/ViewTracker";
-import { getProductBySlug } from "@/lib/db";
-import { discountPercent, formatMoney } from "@/lib/format";
+import ProductVariantProvider from "@/components/ProductVariantProvider";
+import VariantSelector from "@/components/VariantSelector";
+import MobileBuyBar from "@/components/MobileBuyBar";
+import { getProductBySlug, listProductVariants } from "@/lib/db";
+import { discountPercent } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -15,11 +18,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) notFound();
+  const variants = listProductVariants(product.id, true);
   const discount = discountPercent(product.old_price, product.new_price);
   const supportPhone = (process.env.SUPPORT_PHONE || "").trim();
 
   return (
-    <>
+    <ProductVariantProvider variants={variants}>
       <ProductTopbar />
       <ViewTracker productId={product.id} />
       <main className="scan-product-page">
@@ -29,6 +33,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <section className="scan-hero">
             <div className="scan-media-card">
               {discount > 0 && <span className="floating-discount">−{discount}%</span>}
+              {!product.in_stock && <span className="floating-stockout">Tugagan</span>}
               <div className="scan-media-glow" />
               <Image
                 className="scan-product-image"
@@ -49,29 +54,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <h1>{product.name}</h1>
               {product.description && <p className="scan-description">{product.description}</p>}
 
-              <div className="scan-price-card">
-                <div className="price-topline">
-                  <span>Bugungi narx</span>
-                  {discount > 0 && <b>−{discount}% chegirma</b>}
-                </div>
-                <div className="scan-price">{formatMoney(product.new_price)}</div>
-                {product.old_price > product.new_price && <div className="scan-old-price">{formatMoney(product.old_price)}</div>}
-              </div>
-
-              <div className="scan-installments">
-                <div className="scan-installment-card">
-                  <span>12 oyga</span>
-                  <strong>{formatMoney(product.installment_12)}</strong>
-                  <small>har oy</small>
-                </div>
-                <div className="scan-installment-card featured-installment">
-                  <span>24 oyga</span>
-                  <strong>{formatMoney(product.installment_24)}</strong>
-                  <small>har oy</small>
-                </div>
-              </div>
-
-              <a href="#order" className="scan-primary-cta">Buyurtma berish <span>→</span></a>
+              <VariantSelector fallback={{ old_price: product.old_price, new_price: product.new_price, installment_12: product.installment_12, installment_24: product.installment_24, in_stock: product.in_stock }} />
 
               {product.recommended_for && (
                 <div className="fit-card">
@@ -100,18 +83,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <div className="order-trust"><BadgeCheck size={17}/> Ma’lumotlaringiz faqat buyurtma bilan bog‘lanish uchun ishlatiladi.</div>
             </div>
             <div className="order-form-surface">
-              <OrderForm productId={product.id} productName={product.name} />
+              <OrderForm productId={product.id} productName={product.name} fallbackInStock={product.in_stock} />
             </div>
           </section>
         </div>
       </main>
 
-      <div className="mobile-buybar">
-        <div className="mobile-buybar-price"><small>Narx</small><strong>{formatMoney(product.new_price)}</strong></div>
-        {supportPhone ? <a className="mobile-call" href={`tel:${supportPhone}`}>Qo‘ng‘iroq</a> : null}
-        <a className="mobile-order" href="#order">Buyurtma</a>
-      </div>
+      <MobileBuyBar fallbackPrice={product.new_price} fallbackInStock={product.in_stock} supportPhone={supportPhone} />
       <SiteFooter />
-    </>
+    </ProductVariantProvider>
   );
 }

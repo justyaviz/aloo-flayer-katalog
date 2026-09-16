@@ -1,0 +1,40 @@
+{
+  "products": [
+    {
+      "name": "Смартфон Honor x8d 8/128 GB Blue",
+      "price": 3199000,
+      "old_price": 3499000,
+      "stock": 7,
+      "installment_12": 349000,
+      "installment_24": 199000
+    },
+    {
+      "name": "Смартфон Honor X8d 8/128 GB Black",
+      "price": 3249000,
+      "old_price": 3499000,
+      "stock": 3,
+      "installment_12": 354000,
+      "installment_24": 202000
+    },
+    {
+      "name": "Смартфон Honor X8d 8/128 GB Grey",
+      "price": 3299000,
+      "stock": 0
+    },
+    {
+      "name": "Смартфон Honor x8d 8/256 GB Blue",
+      "price": 3599000,
+      "stock": 5
+    },
+    {
+      "name": "Смартфон Honor X8d 8/256 GB Black",
+      "price": 3649000,
+      "stock": 2
+    },
+    {
+      "name": "Смартфон Honor X8d 8/256 GB Grey",
+      "price": 3699000,
+      "stock": 1
+    }
+  ]
+}

@@ -1,12 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useProductVariant } from "@/components/ProductVariantProvider";
 
-export default function OrderForm({ productId, productName }: { productId: number; productName: string }) {
+export default function OrderForm({ productId, productName, fallbackInStock }: { productId: number; productName: string; fallbackInStock: number }) {
+  const { selected, hasVariants } = useProductVariant();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+  const inStock = selected ? selected.stock_qty > 0 : !!fallbackInStock;
 
   async function submit(formData: FormData) {
+    if (!inStock) return setMessage({ type: "err", text: "Bu variant hozirda tugagan." });
     setLoading(true);
     setMessage(null);
     try {
@@ -15,6 +19,7 @@ export default function OrderForm({ productId, productName }: { productId: numbe
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           product_id: productId,
+          variant_id: selected?.id || null,
           customer_name: String(formData.get("customer_name") || ""),
           phone: String(formData.get("phone") || ""),
           branch: String(formData.get("branch") || ""),
@@ -35,6 +40,7 @@ export default function OrderForm({ productId, productName }: { productId: numbe
 
   return (
     <form id="order-form" action={submit} className="form-grid">
+      {hasVariants && selected && <div className="selected-variant-summary"><small>Tanlangan variant</small><strong>{selected.storage} • {selected.color}</strong><span>{selected.stock_qty > 0 ? `${selected.stock_qty} dona mavjud` : "Tugagan"}</span></div>}
       <div className="field">
         <label>Ismingiz</label>
         <input name="customer_name" required minLength={2} placeholder="Ism" />
@@ -49,10 +55,10 @@ export default function OrderForm({ productId, productName }: { productId: numbe
       </div>
       <div className="field">
         <label>Izoh</label>
-        <textarea name="comment" rows={3} placeholder="Rang, xotira yoki boshqa savol..." />
+        <textarea name="comment" rows={3} placeholder="Savolingiz yoki qo‘shimcha izoh..." />
       </div>
-      <button disabled={loading} className="btn btn-primary" type="submit">
-        {loading ? "Yuborilmoqda..." : "Buyurtma berish"}
+      <button disabled={loading || !inStock} className="btn btn-primary" type="submit">
+        {!inStock ? "Mahsulot tugagan" : loading ? "Yuborilmoqda..." : "Buyurtma berish"}
       </button>
       {message && <div className={`notice ${message.type === "ok" ? "notice-ok" : "notice-err"}`}>{message.text}</div>}
     </form>

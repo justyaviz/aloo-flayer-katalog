@@ -42,3 +42,15 @@ Railway’da `/data` ga Volume ulang. Aks holda redeployda yuklangan rasmlar va 
 
 ## Narxlar
 Seed qilingan mahsulotlarda narxlar 0 holatda turadi. Admin panel orqali amaldagi narxlarni kiriting. Narxlar ataylab o‘ylab topilmadi.
+
+## JSON orqali narx va qoldiq yangilash (v3)
+
+Admin panelga kiring: `/admin/products`.
+
+1. `JSON Sync` blokida `.json` faylni tanlang.
+2. Tizim flyer mahsulotlarini, xotira/rang variantlarini va JSONda yo‘q mahsulotlarni ko‘rsatadi.
+3. `Narx va qoldiqni yangilash` tugmasini bosing.
+4. JSONda yo‘q mahsulotlar saytda `Tugagan` bo‘lib qoladi.
+5. Bir modelda bir nechta xotira/rang bo‘lsa, mijoz mahsulot sahifasida tanlay oladi.
+
+Tayyor format: `JSON_IMPORT_EXAMPLE.json`.
