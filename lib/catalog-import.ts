@@ -106,9 +106,17 @@ function extractColor(name: string) {
   return { color: "Standart", colorHex: "#DDE3EA" };
 }
 
+const MODEL_ALIASES: Record<string, string[]> = {
+  "samsung-a07s-lite": ["Samsung A07s Lite", "Samsung A07", "Samsung A075", "Samsung A075 A07"],
+  "samsung-a18-lite": ["Samsung A18 Lite", "Samsung A18", "Samsung A17", "Samsung A175"],
+  "honor-x8e": ["Honor X8e", "Honor X8d"],
+  "redmi-note-15": ["Redmi Note 15", "Redmi 15C", "Xiaomi Redmi Note 15"],
+};
+
 function modelAliases(product: Product) {
   const name = normalizeModelText(product.name);
   const aliases = new Set([name]);
+  for (const alias of MODEL_ALIASES[product.slug] || []) aliases.add(normalizeModelText(alias));
   if (product.brand) {
     const withoutBrand = normalizeModelText(product.name.replace(new RegExp(`^${product.brand}\\s+`, "i"), ""));
     if (withoutBrand && (withoutBrand.length >= 4 || /[a-zа-яё]/i.test(withoutBrand))) aliases.add(withoutBrand);

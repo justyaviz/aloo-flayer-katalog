@@ -1,18 +1,21 @@
-import fs from "fs/promises";
-import path from "path";
 import { NextResponse } from "next/server";
+import { getMediaFile } from "@/lib/db";
 
 export const runtime = "nodejs";
 
 export async function GET(_: Request, { params }: { params: Promise<{ filename: string }> }) {
   const { filename } = await params;
-  const safe = path.basename(filename);
-  const filePath = path.join(process.env.DATA_DIR || path.join(process.cwd(), "data"), "uploads", safe);
   try {
-    const data = await fs.readFile(filePath);
-    const ext = path.extname(safe).toLowerCase();
-    const type = ext === ".jpg" || ext === ".jpeg" ? "image/jpeg" : ext === ".webp" ? "image/webp" : ext === ".gif" ? "image/gif" : "image/png";
-    return new NextResponse(data, { headers: { "Content-Type": type, "Cache-Control": "public, max-age=31536000, immutable" } });
+    const file = await getMediaFile(filename);
+    if (!file) return new NextResponse("Not found", { status: 404 });
+    return new NextResponse(new Uint8Array(file.data), {
+      headers: {
+        "Content-Type": file.mimeType,
+        "Content-Length": String(file.size),
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Content-Disposition": `inline; filename*=UTF-8''${encodeURIComponent(file.filename)}`,
+      },
+    });
   } catch {
     return new NextResponse("Not found", { status: 404 });
   }

@@ -385,8 +385,6 @@ th { color:#697381; font-size:11px; text-transform:uppercase; letter-spacing:.06
 .aloo-best-price { color:#fff; background:linear-gradient(135deg,#1690F5,#0a73df); box-shadow:0 10px 25px rgba(22,144,245,.26); }
 .aloo-stock-badge.out { background:#151a20; color:#fff; }
 .aloo-stage-dots { position:absolute; z-index:5; left:50%; bottom:12px; transform:translateX(-50%); display:flex; gap:6px; }
-.aloo-stage-dots i { width:7px; height:7px; border-radius:99px; background:#d8e0e8; }
-.aloo-stage-dots i.active { width:20px; background:#1690F5; }
 .aloo-price-panel { display:flex; justify-content:space-between; align-items:flex-end; gap:14px; margin-top:14px; padding:16px 17px; border:1px solid #e8edf2; border-radius:20px; background:#fff; }
 .aloo-price-meta { display:flex; gap:9px; align-items:flex-end; min-width:0; }
 .aloo-price-meta > div { display:flex; flex-direction:column; gap:2px; min-width:0; }
@@ -521,4 +519,34 @@ th { color:#697381; font-size:11px; text-transform:uppercase; letter-spacing:.06
   .aloo-price-meta strong { font-size:22px; }
   .aloo-options-footer { margin-left:-15px; margin-right:-15px; padding-left:15px; padding-right:15px; }
   .aloo-options-footer button { min-width:165px; }
+}
+
+/* === v5 PostgreSQL media + 3-image product gallery === */
+.admin-gallery-editor { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:8px; }
+.admin-image-slot { position:relative; min-height:190px; border:1px solid #dce5ec; border-radius:18px; background:#f8fbfd; overflow:hidden; }
+.admin-image-slot.is-primary { border:2px solid #1690F5; box-shadow:0 0 0 3px rgba(22,144,245,.08); }
+.admin-image-preview { position:absolute; inset:0; background:#fff; }
+.admin-image-preview img { object-fit:contain; padding:18px; }
+.admin-image-empty { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:#728092; cursor:pointer; text-align:center; padding:18px; }
+.admin-image-empty svg { color:#1690F5; }
+.admin-image-empty strong { color:#253243; font-size:13px; }
+.admin-image-empty span { font-size:10px; }
+.admin-image-empty input,.admin-replace-image input { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; }
+.admin-primary-pill { position:absolute; z-index:3; left:9px; top:9px; display:flex; align-items:center; gap:4px; padding:6px 8px; border-radius:999px; background:#1690F5; color:#fff; font-size:9px; font-weight:900; box-shadow:0 8px 18px rgba(22,144,245,.22); }
+.admin-image-action { position:absolute; z-index:3; left:9px; top:9px; display:flex; align-items:center; gap:4px; padding:6px 8px; border:1px solid #d8e3ec; border-radius:999px; background:rgba(255,255,255,.94); color:#344054; font-size:9px; font-weight:900; cursor:pointer; }
+.admin-image-remove { position:absolute; z-index:4; right:9px; top:9px; width:30px; height:30px; display:grid; place-items:center; border:0; border-radius:10px; background:rgba(255,255,255,.95); color:#c02a2a; box-shadow:0 5px 14px rgba(16,24,40,.1); cursor:pointer; }
+.admin-replace-image { position:absolute; z-index:3; left:10px; right:10px; bottom:10px; min-height:34px; display:flex; align-items:center; justify-content:center; gap:6px; border-radius:11px; background:rgba(255,255,255,.94); border:1px solid #e1e7ed; color:#314052; font-size:10px; font-weight:900; cursor:pointer; overflow:hidden; }
+.admin-field-help { margin:8px 0 0; color:#7a8695; font-size:10px; line-height:1.45; }
+.admin-product-thumbs { display:flex; align-items:center; }
+.admin-product-thumbs .product-mini { margin-right:-10px; border:2px solid #fff; box-shadow:0 3px 10px rgba(16,24,40,.08); }
+
+.aloo-gallery-arrow { position:absolute; z-index:6; top:50%; transform:translateY(-50%); width:36px; height:36px; border:1px solid rgba(21,42,63,.08); border-radius:50%; background:rgba(255,255,255,.92); color:#1f3346; display:grid; place-items:center; box-shadow:0 8px 20px rgba(21,42,63,.12); }
+.aloo-gallery-arrow.left { left:10px; }
+.aloo-gallery-arrow.right { right:10px; }
+.aloo-stage-dots button { width:7px; height:7px; padding:0; border:0; border-radius:99px; background:#d8e0e8; cursor:pointer; transition:.18s ease; }
+.aloo-stage-dots button.active { width:20px; background:#1690F5; }
+
+@media (max-width: 720px) {
+  .admin-gallery-editor { grid-template-columns:1fr; }
+  .admin-image-slot { min-height:240px; }
 }

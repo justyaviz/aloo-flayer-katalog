@@ -57,6 +57,11 @@ export default function ProductMobileFlow({
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [payPlan, setPayPlan] = useState<PayPlan>("full");
   const [favorite, setFavorite] = useState(false);
+  const gallery = useMemo(() => {
+    const images = Array.isArray(product.image_urls) ? product.image_urls.filter(Boolean).slice(0, 3) : [];
+    return images.length ? images : [product.image_url || "/brand/aloo-logo.png"];
+  }, [product.image_urls, product.image_url]);
+  const [galleryIndex, setGalleryIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [message, setMessage] = useState("");
@@ -175,7 +180,7 @@ export default function ProductMobileFlow({
           <h1>Rahmat!</h1>
           <p>{product.name} bo‘yicha so‘rovingiz qabul qilindi. aloo jamoasi tez orada siz bilan bog‘lanadi.</p>
           <div className="aloo-order-summary-card">
-            <Image src={product.image_url || "/brand/aloo-logo.png"} alt={product.name} width={76} height={76}/>
+            <Image src={gallery[0]} alt={product.name} width={76} height={76}/>
             <div><strong>{product.name}</strong><span>{storage || ""}{storage && color ? " • " : ""}{color || ""}</span><b>{formatMoney(current.new_price)}</b></div>
           </div>
           <button type="button" className="aloo-primary-button" onClick={() => { setDone(false); go(1); }}>Mahsulotga qaytish <ChevronRight size={20}/></button>
@@ -214,8 +219,12 @@ export default function ProductMobileFlow({
             <div className="aloo-product-stage">
               {discount > 0 && <span className="aloo-best-price">Eng yaxshi narx</span>}
               {!inStock && <span className="aloo-stock-badge out">Tugagan</span>}
-              <Image src={product.image_url || "/brand/aloo-logo.png"} alt={product.name} width={620} height={720} priority />
-              <div className="aloo-stage-dots"><i className="active"/><i/><i/><i/></div>
+              <Image src={gallery[galleryIndex]} alt={`${product.name} — ${galleryIndex + 1}-rasm`} width={620} height={720} priority={galleryIndex === 0} />
+              {gallery.length > 1 && <>
+                <button type="button" className="aloo-gallery-arrow left" onClick={() => setGalleryIndex(i => (i - 1 + gallery.length) % gallery.length)} aria-label="Oldingi rasm"><ChevronLeft size={22}/></button>
+                <button type="button" className="aloo-gallery-arrow right" onClick={() => setGalleryIndex(i => (i + 1) % gallery.length)} aria-label="Keyingi rasm"><ChevronRight size={22}/></button>
+              </>}
+              <div className="aloo-stage-dots">{gallery.map((_, i) => <button type="button" aria-label={`${i+1}-rasm`} key={i} className={i === galleryIndex ? "active" : ""} onClick={() => setGalleryIndex(i)}/>)}</div>
             </div>
 
             <div className="aloo-price-panel">
@@ -295,7 +304,7 @@ export default function ProductMobileFlow({
             {cheapest && (
               <div className="aloo-cheapest-card">
                 <span>Eng arzon variant</span>
-                <Image src={product.image_url || "/brand/aloo-logo.png"} alt="" width={54} height={54}/>
+                <Image src={gallery[0]} alt="" width={54} height={54}/>
                 <div><b>{product.name} • {cheapest.storage} • {cheapest.color}</b><strong>{formatMoney(cheapest.new_price)}</strong><small>{cheapest.installment_24 ? `${formatMoney(cheapest.installment_24)} / oy • 24 oy` : "Eng arzon mavjud narx"}</small></div>
                 <ChevronRight/>
               </div>
@@ -338,7 +347,7 @@ export default function ProductMobileFlow({
             </div>
 
             <div className="aloo-order-summary-card">
-              <Image src={product.image_url || "/brand/aloo-logo.png"} alt={product.name} width={72} height={72}/>
+              <Image src={gallery[0]} alt={product.name} width={72} height={72}/>
               <div><strong>{product.name}</strong><span>{storage || ""}{storage && color ? " • " : ""}{color || ""}</span><b>{formatMoney(current.new_price)}</b></div>
             </div>
 

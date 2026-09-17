@@ -11,6 +11,6 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const body = await req.json();
   const status = String(body.status) as Order["status"];
   if (!statuses.includes(status)) return NextResponse.json({ error: "Status noto‘g‘ri" }, { status: 400 });
-  updateOrderStatus(Number(id), status);
+  await updateOrderStatus(Number(id), status);
   return NextResponse.json({ ok: true });
 }

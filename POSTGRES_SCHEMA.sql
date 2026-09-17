@@ -1,0 +1,61 @@
+-- Reference schema. The application creates/migrates these tables automatically.
+CREATE TABLE IF NOT EXISTS products (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  brand TEXT NOT NULL DEFAULT '',
+  slug TEXT NOT NULL UNIQUE,
+  image_url TEXT NOT NULL DEFAULT '',
+  image_urls TEXT[] NOT NULL DEFAULT '{}'::text[],
+  recommended_for TEXT NOT NULL DEFAULT '',
+  description TEXT NOT NULL DEFAULT '',
+  old_price INTEGER NOT NULL DEFAULT 0,
+  new_price INTEGER NOT NULL DEFAULT 0,
+  installment_12 INTEGER NOT NULL DEFAULT 0,
+  installment_24 INTEGER NOT NULL DEFAULT 0,
+  active INTEGER NOT NULL DEFAULT 1,
+  featured INTEGER NOT NULL DEFAULT 1,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  views INTEGER NOT NULL DEFAULT 0,
+  in_stock INTEGER NOT NULL DEFAULT 1,
+  json_managed INTEGER NOT NULL DEFAULT 0,
+  last_sync_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS product_variants (
+  id SERIAL PRIMARY KEY,
+  product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  source_name TEXT NOT NULL DEFAULT '',
+  storage TEXT NOT NULL DEFAULT 'Standart',
+  color TEXT NOT NULL DEFAULT 'Standart',
+  color_hex TEXT NOT NULL DEFAULT '#DDE3EA',
+  old_price INTEGER NOT NULL DEFAULT 0,
+  new_price INTEGER NOT NULL DEFAULT 0,
+  installment_12 INTEGER NOT NULL DEFAULT 0,
+  installment_24 INTEGER NOT NULL DEFAULT 0,
+  stock_qty INTEGER NOT NULL DEFAULT 0,
+  active INTEGER NOT NULL DEFAULT 1,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id SERIAL PRIMARY KEY,
+  product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  variant_id INTEGER REFERENCES product_variants(id) ON DELETE SET NULL,
+  customer_name TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  branch TEXT NOT NULL DEFAULT '',
+  comment TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'new',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS media_files (
+  id TEXT PRIMARY KEY,
+  filename TEXT NOT NULL,
+  mime_type TEXT NOT NULL,
+  size_bytes INTEGER NOT NULL DEFAULT 0,
+  data BYTEA NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

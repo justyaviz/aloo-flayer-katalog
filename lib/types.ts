@@ -4,6 +4,7 @@ export type Product = {
   brand: string;
   slug: string;
   image_url: string;
+  image_urls: string[];
   recommended_for: string;
   description: string;
   old_price: number;

@@ -8,11 +8,11 @@ export const dynamic = "force-dynamic";
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const variants = listProductVariants(product.id, true);
-  const related = listProducts(false)
+  const variants = await listProductVariants(product.id, true);
+  const related = (await listProducts(false))
     .filter(item => item.id !== product.id)
     .slice(0, 4)
     .map(item => ({ id: item.id, name: item.name, slug: item.slug, image_url: item.image_url, new_price: item.new_price }));

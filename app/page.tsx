@@ -7,8 +7,8 @@ import { listProducts } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
-export default function HomePage() {
-  const products = listProducts(false);
+export default async function HomePage() {
+  const products = await listProducts(false);
   return (
     <>
       <SiteHeader />

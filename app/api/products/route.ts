@@ -5,7 +5,7 @@ import { slugify } from "@/lib/format";
 
 export async function GET() {
   if (!(await isAdmin())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  return NextResponse.json(listProducts(true));
+  return NextResponse.json(await listProducts(true));
 }
 
 export async function POST(req: Request) {
@@ -14,11 +14,12 @@ export async function POST(req: Request) {
     const body = await req.json();
     const name = String(body.name || "").trim();
     if (!name) return NextResponse.json({ error: "Mahsulot nomi majburiy" }, { status: 400 });
-    const id = createProduct({
+    const id = await createProduct({
       name,
       brand: String(body.brand || "").trim(),
       slug: slugify(String(body.slug || name)),
       image_url: String(body.image_url || "").trim(),
+      image_urls: Array.isArray(body.image_urls) ? body.image_urls.map((v: unknown) => String(v || "").trim()).filter(Boolean).slice(0, 3) : (body.image_url ? [String(body.image_url).trim()] : []),
       recommended_for: String(body.recommended_for || "").trim(),
       description: String(body.description || "").trim(),
       old_price: Math.max(0, Number(body.old_price) || 0),
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
     });
     return NextResponse.json({ ok: true, id });
   } catch (e) {
-    const message = e instanceof Error && e.message.includes("UNIQUE") ? "Bu slug avval ishlatilgan" : "Mahsulot yaratilmadi";
+    const message = e instanceof Error && (e.message.includes("unique") || e.message.includes("duplicate key")) ? "Bu slug avval ishlatilgan" : "Mahsulot yaratilmadi";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }

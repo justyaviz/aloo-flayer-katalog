@@ -7,14 +7,15 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   if (!(await isAdmin())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
   const productId = Number(id);
-  if (!productId || !getProductById(productId)) return NextResponse.json({ error: "Mahsulot topilmadi" }, { status: 404 });
+  if (!productId || !(await getProductById(productId))) return NextResponse.json({ error: "Mahsulot topilmadi" }, { status: 404 });
   try {
     const body = await req.json();
-    updateProduct(productId, {
+    await updateProduct(productId, {
       name: String(body.name || "").trim(),
       brand: String(body.brand || "").trim(),
       slug: slugify(String(body.slug || body.name || "")),
       image_url: String(body.image_url || "").trim(),
+      image_urls: Array.isArray(body.image_urls) ? body.image_urls.map((v: unknown) => String(v || "").trim()).filter(Boolean).slice(0, 3) : (body.image_url ? [String(body.image_url).trim()] : []),
       recommended_for: String(body.recommended_for || "").trim(),
       description: String(body.description || "").trim(),
       old_price: Math.max(0, Number(body.old_price) || 0),
@@ -27,7 +28,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     });
     return NextResponse.json({ ok: true });
   } catch (e) {
-    const message = e instanceof Error && e.message.includes("UNIQUE") ? "Bu slug avval ishlatilgan" : "Mahsulot saqlanmadi";
+    const message = e instanceof Error && (e.message.includes("unique") || e.message.includes("duplicate key")) ? "Bu slug avval ishlatilgan" : "Mahsulot saqlanmadi";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }
@@ -36,7 +37,7 @@ export async function DELETE(_: Request, { params }: { params: Promise<{ id: str
   if (!(await isAdmin())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await params;
   const productId = Number(id);
-  if (!productId || !getProductById(productId)) return NextResponse.json({ error: "Mahsulot topilmadi" }, { status: 404 });
-  deleteProduct(productId);
+  if (!productId || !(await getProductById(productId))) return NextResponse.json({ error: "Mahsulot topilmadi" }, { status: 404 });
+  await deleteProduct(productId);
   return NextResponse.json({ ok: true });
 }

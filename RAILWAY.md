@@ -1,16 +1,27 @@
-# Railway deploy
+# Railway deploy — v5 PostgreSQL
 
-1. Projectni GitHubga push qiling yoki Railway'ga repo orqali ulang.
-2. Variables:
-   - `NEXT_PUBLIC_SITE_URL=https://sizning-domeningiz.uz`
-   - `ADMIN_USERNAME=admin`
-   - `ADMIN_PASSWORD=<kuchli-parol>`
-   - `SESSION_SECRET=<32+ belgili random secret>`
-   - `DATA_DIR=/data`
-3. Railway Volume yarating va mount path `/data` qiling.
-4. Healthcheck path: `/api/health`
-5. Domain ulang.
-6. Deploy tugagach `/admin` ga kiring va 12 mahsulot narxlarini kiriting.
-7. Har mahsulotdagi `QR SVG` ni yuklab olib flyerga qo‘ying.
+Sizda `Postgres` service allaqachon bo‘lsa, alohida Volume kerak emas.
 
-Dockerfile mavjud.
+## Variables
+`aloo-flayer-katalog` service → Variables:
+
+- `DATABASE_URL=${{Postgres.DATABASE_URL}}`
+- `NEXT_PUBLIC_SITE_URL=https://alookatalog.up.railway.app`
+- `HOSTNAME=0.0.0.0`
+- `ADMIN_USERNAME=admin`
+- `ADMIN_PASSWORD=<kuchli-parol>`
+- `SESSION_SECRET=<32+ belgili random secret>`
+- `SUPPORT_PHONE=<ixtiyoriy>`
+
+`DATA_DIR` v5 da kerak emas. Qolsa zarar qilmaydi, lekin ishlatilmaydi.
+
+## Deploy
+1. Yangi kodni GitHub main branchga push qiling.
+2. Railway avtomatik deploy qiladi.
+3. `/api/health` ni oching. `database: postgres-connected` bo‘lishi kerak.
+4. `/admin/products` ga kiring.
+5. Mahsulotni tahrirlab 2–3 ta rasm yuklab test qiling.
+6. Sahifani qayta oching — rasmlar redeploydan keyin ham Postgresda qoladi.
+
+## Muhim
+v4 SQLite ishlatgan. v5 dan boshlab yangi ma’lumotlar PostgreSQL da saqlanadi. Eski SQLite ma’lumotlari avtomatik ko‘chirilmaydi.
